@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Sản Phẩm Mới - SportShop Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <%- include('../../partials/admin_sidebar') %>
+        
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Thêm Sản Phẩm Mới</h1>
+                <a href="/admin/products" class="btn" style="background: white; border: 1px solid #ddd;">&larr; Quay Lại</a>
+            </div>
+            
+            <div class="admin-form">
+                <form action="/admin/products" method="POST" enctype="multipart/form-data">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="name">Tên Sản Phẩm</label>
+                            <input type="text" class="form-control" id="name" name="name" required placeholder="Nhập tên sản phẩm">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="price">Giá (VNĐ)</label>
+                            <input type="number" class="form-control" id="price" name="price" required placeholder="Nhập giá sản phẩm">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="brand">Thương Hiệu</label>
+                            <input type="text" class="form-control" id="brand" name="brand" required placeholder="Ví dụ: NIKE, ADIDAS">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category">Danh Mục</label>
+                            <select class="form-control" id="category" name="category" required>
+                                <option value="">Chọn danh mục...</option>
+                                <option value="Giày">Giày</option>
+                                <option value="Áo">Áo</option>
+                                <option value="Quần">Quần</option>
+                                <option value="Phụ kiện">Phụ kiện</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Mô Tả Sản Phẩm</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="Nhập mô tả chi tiết sản phẩm..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Hình Ảnh Sản Phẩm</label>
+                        <div style="margin-bottom: 1rem;">
+                            <input type="text" class="form-control" name="imageUrl" placeholder="Hoặc dán URL hình ảnh vào đây">
+                        </div>
+                        <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*" style="padding: 0.5rem; background: #f9f9f9;">
+                    </div>
+                    
+                    <button type="submit" class="btn-large" style="margin-top: 1rem;">Lưu Sản Phẩm</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

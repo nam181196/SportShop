@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký — SportShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body class="auth-body">
+
+    <div class="auth-container">
+        <!-- Left Panel -->
+        <div class="auth-brand-panel">
+            <a href="/" class="auth-logo">SPORTSHOP.</a>
+            <div class="auth-brand-content">
+                <h2>Tham gia cộng đồng</h2>
+                <p>Đăng ký để nhận ưu đãi độc quyền và theo dõi đơn hàng dễ dàng.</p>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="auth-form-panel">
+            <div class="auth-form-wrapper">
+                <h1 class="auth-title">Tạo tài khoản</h1>
+                <p class="auth-subtitle">Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
+
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="auth-alert auth-alert-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <% if (typeof success !== 'undefined' && success) { %>
+                    <div class="auth-alert auth-alert-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <%= success %>
+                    </div>
+                <% } %>
+
+                <form action="/register" method="POST" class="auth-form" id="register-form">
+                    <div class="form-group">
+                        <label for="fullName">Họ và tên</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            class="form-control"
+                            placeholder="Nguyễn Văn A"
+                            value="<%= typeof formData !== 'undefined' ? formData.fullName : '' %>"
+                            required
+                            autocomplete="name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="example@email.com"
+                            value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mật khẩu</label>
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Ít nhất 6 ký tự"
+                                required
+                                minlength="6"
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="toggle-password" onclick="togglePassword('password')" aria-label="Hiện mật khẩu">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu</label>
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                class="form-control"
+                                placeholder="Nhập lại mật khẩu"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')" aria-label="Hiện mật khẩu">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="role-note">
+                        🔒 Tài khoản mới sẽ có quyền <strong>User</strong>. Liên hệ quản trị viên để nâng cấp quyền Admin.
+                    </p>
+
+                    <button type="submit" class="auth-btn" id="register-btn">
+                        <span>Tạo tài khoản</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        // Client-side: kiểm tra confirm password
+        document.getElementById('register-form').addEventListener('submit', function (e) {
+            const pw  = document.getElementById('password').value;
+            const cpw = document.getElementById('confirmPassword').value;
+            if (pw !== cpw) {
+                e.preventDefault();
+                alert('Mật khẩu xác nhận không khớp!');
+            }
+        });
+    </script>
+</body>
+</html>

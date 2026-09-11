@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Sản Phẩm - SportShop Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <%- include('../../partials/admin_sidebar') %>
+        
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Chỉnh Sửa Sản Phẩm</h1>
+                <a href="/admin/products" class="btn" style="background: white; border: 1px solid #ddd;">&larr; Quay Lại</a>
+            </div>
+            
+            <div class="admin-form">
+                <form action="/admin/products/<%= product._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="name">Tên Sản Phẩm</label>
+                            <input type="text" class="form-control" id="name" name="name" required value="<%= product.name %>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="price">Giá (VNĐ)</label>
+                            <input type="number" class="form-control" id="price" name="price" required value="<%= product.price %>">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="brand">Thương Hiệu</label>
+                            <input type="text" class="form-control" id="brand" name="brand" required value="<%= product.brand %>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category">Danh Mục</label>
+                            <select class="form-control" id="category" name="category" required>
+                                <option value="Giày" <%= product.category === 'Giày' ? 'selected' : '' %>>Giày</option>
+                                <option value="Áo" <%= product.category === 'Áo' ? 'selected' : '' %>>Áo</option>
+                                <option value="Quần" <%= product.category === 'Quần' ? 'selected' : '' %>>Quần</option>
+                                <option value="Áo khoác" <%= product.category === 'Áo khoác' ? 'selected' : '' %>>Áo khoác</option>
+                                <option value="Phụ kiện" <%= product.category === 'Phụ kiện' ? 'selected' : '' %>>Phụ kiện</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Mô Tả Sản Phẩm</label>
+                        <textarea class="form-control" id="description" name="description"><%= product.description || '' %></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Hình Ảnh Hiện Tại</label>
+                        <div style="margin-bottom: 1rem;">
+                            <img src="<%= product.image %>" alt="<%= product.name %>" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
+                        </div>
+                        
+                        <label>Cập Nhật Hình Ảnh (Không bắt buộc)</label>
+                        <div style="margin-bottom: 1rem;">
+                            <input type="text" class="form-control" name="imageUrl" value="<%= product.image.startsWith('http') ? product.image : '' %>" placeholder="Đổi URL hình ảnh hoặc tải file lên">
+                        </div>
+                        <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*" style="padding: 0.5rem; background: #f9f9f9;">
+                    </div>
+                    
+                    <button type="submit" class="btn-large" style="margin-top: 1rem;">Cập Nhật Sản Phẩm</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

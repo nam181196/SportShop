@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="/css/auth.css">
+<header class="store-header">
+    <div class="header-container">
+        <a href="/" class="logo">SPORTSHOP.</a>
+        <nav class="main-nav">
+            <a href="/">Trang Chủ</a>
+            <a href="#">Nam</a>
+            <a href="#">Nữ</a>
+            <a href="#">Trẻ Em</a>
+            <a href="#" class="sale">Sale</a>
+        </nav>
+        <div class="header-actions">
+            <a href="/cart" class="cart-btn">
+                Giỏ Hàng <span class="cart-badge"><%= typeof cartCount !== 'undefined' ? cartCount : 0 %></span>
+            </a>
+
+            <% if (session && session.user) { %>
+                <%/* Đã đăng nhập */%>
+                <% if (session.user.role === 'admin') { %>
+                    <a href="/admin" class="admin-link">⚙ Admin</a>
+                <% } %>
+                <div class="user-menu">
+                    <span class="user-info">
+                        <%= session.user.fullName.split(' ').pop() %>
+                        <span class="role-badge role-<%= session.user.role %>">
+                            <%= session.user.role.toUpperCase() %>
+                        </span>
+                    </span>
+                    <form action="/logout" method="POST" style="margin:0;">
+                        <button type="submit" class="logout-btn">Đăng xuất</button>
+                    </form>
+                </div>
+            <% } else { %>
+                <%/* Chưa đăng nhập */%>
+                <a href="/login" class="login-link">Đăng nhập</a>
+            <% } %>
+        </div>
+    </div>
+</header>

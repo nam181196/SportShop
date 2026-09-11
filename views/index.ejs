@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sport Store - Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <%- include('partials/store_header') %>
+
+    <div class="hero">
+        <h1>Just Do It.</h1>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Hàng Mới Về</h2>
+        
+        <div class="product-grid">
+            <% products.forEach(function(product) { %>
+                <a href="/product/<%= product._id %>" class="product-card">
+                    <div class="img-container">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" loading="lazy">
+                    </div>
+                    <div class="info">
+                        <div>
+                            <div class="name"><%= product.name %></div>
+                            <div class="category"><%= product.brand %> &bull; <%= product.category %></div>
+                        </div>
+                        <div class="price"><%= product.price.toLocaleString('vi-VN') %>₫</div>
+                    </div>
+                    <form action="/cart/add/<%= product._id %>" method="POST" style="width: 100%;" onclick="event.stopPropagation();">
+                        <button type="submit" class="buy-btn">THÊM VÀO GIỎ</button>
+                    </form>
+                </a>
+            <% }); %>
+        </div>
+    </div>
+
+    <%- include('partials/store_footer') %>
+
+</body>
+</html>

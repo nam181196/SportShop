@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm - SportShop Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <%- include('../../partials/admin_sidebar') %>
+        
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Sản Phẩm</h1>
+                <a href="/admin/products/new" class="btn btn-primary">+ Thêm Sản Phẩm</a>
+            </div>
+            
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Hình Ảnh</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Thương Hiệu</th>
+                            <th>Danh Mục</th>
+                            <th>Giá</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(product => { %>
+                            <tr>
+                                <td><img src="<%= product.image %>" alt="<%= product.name %>"></td>
+                                <td style="font-weight: 600;"><%= product.name %></td>
+                                <td><%= product.brand %></td>
+                                <td><span style="background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem;"><%= product.category %></span></td>
+                                <td style="font-weight: 700;"><%= product.price.toLocaleString('vi-VN') %>₫</td>
+                                <td>
+                                    <div class="actions-cell">
+                                        <a href="/admin/products/<%= product._id %>/edit" class="btn btn-warning">Sửa</a>
+                                        <form action="/admin/products/<%= product._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">
+                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

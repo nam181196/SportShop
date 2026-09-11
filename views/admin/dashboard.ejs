@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SportShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <%- include('../partials/admin_sidebar') %>
+        
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Tổng Quan Hệ Thống</h1>
+                <div style="display: flex; gap: 15px;">
+                    <a href="/" class="btn" style="background: white; border: 1px solid #ddd;">Xem Cửa Hàng</a>
+                    <a href="/admin/products/new" class="btn btn-primary">+ Thêm Sản Phẩm</a>
+                </div>
+            </div>
+            
+            <div class="dashboard-cards">
+                <div class="stat-card">
+                    <h3>Tổng Sản Phẩm</h3>
+                    <div class="value"><%= totalProducts %></div>
+                </div>
+                <div class="stat-card">
+                    <h3>Đơn Hàng Hôm Nay</h3>
+                    <div class="value">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Doanh Thu Tháng</h3>
+                    <div class="value">0₫</div>
+                </div>
+            </div>
+            
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Sản Phẩm Mới Thêm Gần Đây</h2>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Sản Phẩm</th>
+                            <th>Danh Mục</th>
+                            <th>Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(recentProducts && recentProducts.length > 0) { %>
+                            <% recentProducts.forEach(product => { %>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            <img src="<%= product.image %>" alt="<%= product.name %>">
+                                            <div>
+                                                <div style="font-weight: 600;"><%= product.name %></div>
+                                                <div style="font-size: 0.85rem; color: var(--text-secondary);"><%= product.brand %></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><%= product.category %></td>
+                                    <td style="font-weight: 600;"><%= product.price.toLocaleString('vi-VN') %>₫</td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="3" style="text-align: center; padding: 2rem;">Chưa có sản phẩm nào.</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng - Sport Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <%- include('partials/store_header') %>
+
+    <div class="container">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Giỏ Hàng Của Bạn</h2>
+        
+        <% if (cart.length > 0) { %>
+            <div class="cart-layout">
+                <div class="cart-items">
+                    <% cart.forEach(item => { %>
+                        <div class="cart-item">
+                            <img src="<%= item.product.image %>" alt="<%= item.product.name %>">
+                            <div class="item-details">
+                                <div class="item-name"><%= item.product.name %></div>
+                                <div class="item-price"><%= item.product.price.toLocaleString('vi-VN') %>₫</div>
+                                
+                                <div class="item-actions">
+                                    <form action="/cart/update/<%= item.product._id %>" method="POST" style="display: flex; align-items: center; gap: 10px;">
+                                        <input type="hidden" name="action" value="decrease">
+                                        <button type="submit" class="qty-btn">-</button>
+                                    </form>
+                                    
+                                    <span class="qty-display"><%= item.quantity %></span>
+                                    
+                                    <form action="/cart/update/<%= item.product._id %>" method="POST" style="display: flex; align-items: center; gap: 10px;">
+                                        <input type="hidden" name="action" value="increase">
+                                        <button type="submit" class="qty-btn">+</button>
+                                    </form>
+
+                                    <form action="/cart/remove/<%= item.product._id %>" method="POST" style="margin-left: auto;">
+                                        <button type="submit" class="remove-btn">Xóa</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                
+                <div class="cart-summary">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Tóm Tắt Đơn Hàng</h3>
+                    
+                    <div class="summary-row">
+                        <span>Tạm tính</span>
+                        <strong><%= total.toLocaleString('vi-VN') %>₫</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí giao hàng</span>
+                        <strong>Miễn phí</strong>
+                    </div>
+                    
+                    <div class="summary-row summary-total">
+                        <span>Tổng Cộng</span>
+                        <span><%= total.toLocaleString('vi-VN') %>₫</span>
+                    </div>
+                    
+                    <a href="/checkout" class="btn-large" style="display: block; margin-top: 2rem;">Tiến Hành Thanh Toán</a>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Giỏ hàng của bạn đang trống</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Khám phá thêm các sản phẩm tuyệt vời của chúng tôi để bắt đầu mua sắm.</p>
+                <a href="/" class="btn-large" style="display: inline-block; width: auto; padding: 1rem 3rem;">Tiếp Tục Mua Sắm</a>
+            </div>
+        <% } %>
+    </div>
+
+    <%- include('partials/store_footer') %>
+
+</body>
+</html>
