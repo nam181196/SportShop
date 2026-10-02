@@ -1,16 +1,6 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    restart: unless-stopped
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - internal-net
-    # Không dùng "ports: - '27017:27017'" để tránh expose database ra ngoài Internet
-
   backend:
     build:
       context: .
@@ -20,9 +10,9 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/sportShopDB
-    depends_on:
-      - mongodb
+      - MONGODB_URI=${MONGODB_URI}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - PORT=3000
     networks:
       - internal-net
 
@@ -44,6 +34,3 @@ services:
 networks:
   internal-net:
     driver: bridge
-
-volumes:
-  mongo-data:
