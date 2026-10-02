@@ -26,6 +26,7 @@ services:
       - "8001:8000"
     environment:
       - BACKEND_URL=http://backend:3000
+      - EMA_JWKS_URL=https://logical-guppy-2189.clerk.accounts.dev/.well-known/jwks.json
     depends_on:
       - backend
     networks:
